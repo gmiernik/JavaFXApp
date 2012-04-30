@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafxapp.model.*?>
+
+<BorderPane prefHeight="400" prefWidth="320" xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="javafxapp.presenter.MainPresenter">
+    <top>
+        <HBox spacing="10" prefHeight="50">
+            <children>
+                <Button fx:id="btnNew" text="new" />
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <VBox>
+            <children>
+                <HBox spacing="5">
+                    <children>
+                        <Text text="Number of person" x="10" y="20" />
+                        <Label fx:id="numberField" />
+                    </children>
+                </HBox>
+                <TableView fx:id="mainTable">
+                    <columns>
+                        <TableColumn text="Firstname" prefWidth="100">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="firstName" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="lastNameColumn" text="Lastname" prefWidth="100">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="lastName" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
