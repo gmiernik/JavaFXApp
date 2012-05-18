@@ -28,11 +28,6 @@ public class SimplePersonService implements PersonService {
     }
 
     @Override
-    public List<Person> getAll() {
-        return list;
-    }
-
-    @Override
     public boolean remove(Person person) {
         return list.remove(person);
     }

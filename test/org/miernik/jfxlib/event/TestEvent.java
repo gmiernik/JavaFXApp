@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxapp.event;
+package org.miernik.jfxlib.event;
 
 /**
  *
@@ -10,8 +10,9 @@ package javafxapp.event;
  */
 public class TestEvent extends Event {
 
-    public static EventType<TestEvent> TEST1 = new EventType<>();
-    public static EventType<TestEvent> TEST2;
+    public static EventType TEST1 = new EventType();
+    public static EventType TEST2 = new EventType();
+    public static EventType TEST3 = new EventType();
     
     public TestEvent() {
         super(TEST1);

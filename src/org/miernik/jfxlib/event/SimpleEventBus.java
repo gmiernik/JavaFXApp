@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxapp.event;
+package org.miernik.jfxlib.event;
 
 import java.util.*;
+
 
 /**
  *
@@ -14,7 +15,7 @@ public class SimpleEventBus implements EventBus {
 
     private Map<EventType, List<EventListener>> listenersMap;
 
-    protected Map<EventType, List<javafxapp.event.EventListener>> getListenersMap() {
+    protected Map<EventType, List<EventListener>> getListenersMap() {
         return listenersMap;
     }
     
@@ -24,6 +25,9 @@ public class SimpleEventBus implements EventBus {
 
     @Override
     public void addListener(EventType type, EventListener listener) {
+        if (type==null || listener==null) {
+            throw new IllegalArgumentException("one of the parameter is NULL");
+        }
         if (!listenersMap.containsKey(type)) {
             listenersMap.put(type, new ArrayList<EventListener>());
         }
@@ -45,7 +49,7 @@ public class SimpleEventBus implements EventBus {
     }
 
     @Override
-    public void removeListener(EventType type, javafxapp.event.EventListener listener) {
+    public void removeListener(EventType type, EventListener listener) {
         if (listenersMap.containsKey(type)) {
             List<EventListener> listeners = listenersMap.get(type);
             if (listeners.contains(listener))

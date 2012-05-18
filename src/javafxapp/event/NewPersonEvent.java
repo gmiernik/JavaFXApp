@@ -4,14 +4,18 @@
  */
 package javafxapp.event;
 
+import javafxapp.model.Person;
+import org.miernik.jfxlib.event.Event;
+import org.miernik.jfxlib.event.EventType;
+
 /**
  *
  * @author Miernik
  */
 public class NewPersonEvent extends Event {
-    public static EventType<NewPersonEvent> NEW_PERSON;
+    public static EventType NEW_PERSON = new EventType();
 
-    public NewPersonEvent() {
+    public NewPersonEvent(Person p) {
         super(NEW_PERSON);
     }
     

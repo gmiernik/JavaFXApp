@@ -2,14 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxapp.view;
-
-import javafx.scene.Parent;
+package org.miernik.jfxlib.event;
 
 /**
  *
  * @author Miernik
  */
-public interface Display {
-    Parent getView();
+public class EventType {
 }

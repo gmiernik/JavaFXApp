@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxapp.event;
+package org.miernik.jfxlib.event;
 
-import javafxapp.event.SimpleEventBus;
 import java.util.List;
 import java.util.Map;
 import org.junit.AfterClass;
@@ -117,30 +116,28 @@ public class SimpleEventBusTest {
         assertTrue(listeners.get(type).contains(listener1));
         assertTrue(listeners.get(type).contains(listener2));
     }
-    
+
     @Test
     public void testAddListenerNullType() {
         final SimpleEventBus eventBus = new SimpleEventBus();
-        final EventType<TestEvent> type = null;
-        final ResultListener result = new ResultListener();
+        final EventType type = null;
         final EventListener<TestEvent> listener1 = new EventListener<TestEvent>() {
 
             @Override
             public void notify(TestEvent e) {
-                result.executed = true;
             }
         };
 
-        eventBus.addListener(type, listener1);
-        eventBus.fireEvent(new TestEvent(type));
+        try {
+            eventBus.addListener(type, listener1);
+            fail("it allows to add null type or listener");
+        } catch (IllegalArgumentException ex) {
+        };
 
         // check
         Map<EventType, List<EventListener>> listeners = eventBus.getListenersMap();
         assertNotNull(listeners);
-        assertTrue(listeners.containsKey(type));
-        assertNotNull(listeners.get(type));
-        assertTrue(listeners.get(type).contains(listener1));
-        assertTrue(result.executed);
+        assertFalse(listeners.containsKey(type));
     }
 
     protected class ResultListener {
@@ -181,6 +178,40 @@ public class SimpleEventBusTest {
     }
 
     @Test
+    public void testFireEvent2() {
+        final SimpleEventBus eventBus = new SimpleEventBus();
+        final TestEvent event1 = new TestEvent(TestEvent.TEST2);
+        final EventType type1 = event1.getType();
+        final TestEvent event2 = new TestEvent(TestEvent.TEST3);
+        final EventType type2 = event2.getType();
+        final ResultListener result1 = new ResultListener();
+        final ResultListener result2 = new ResultListener();
+        final EventListener<TestEvent> listener1 = new EventListener<TestEvent>() {
+
+            @Override
+            public void notify(TestEvent arg0) {
+                result1.executed = true;
+            }
+        };
+        final EventListener<TestEvent> listener2 = new EventListener<TestEvent>() {
+
+            @Override
+            public void notify(TestEvent arg0) {
+                result2.executed = true;
+            }
+        };
+
+        eventBus.addListener(type1, listener1);
+        eventBus.addListener(type2, listener2);
+
+        eventBus.fireEvent(event1);
+
+        // check
+        assertTrue(result1.executed);
+        assertFalse(result2.executed);
+    }
+
+    @Test
     public void testRemoveListener() {
         final SimpleEventBus eventBus = new SimpleEventBus();
         final EventType type = TestEvent.TEST1;
@@ -192,7 +223,7 @@ public class SimpleEventBusTest {
             }
         };
         eventBus.addListener(type, listener);
-        
+
         eventBus.removeListener(type, listener);
 
         // check
@@ -202,7 +233,7 @@ public class SimpleEventBusTest {
         assertNotNull(listeners.get(type));
         assertFalse(listeners.get(type).contains(listener));
     }
-    
+
     @Test
     public void testRemoveListener2() {
         final SimpleEventBus eventBus = new SimpleEventBus();
@@ -223,7 +254,7 @@ public class SimpleEventBusTest {
         };
         eventBus.addListener(type, listener1);
         eventBus.addListener(type, listener2);
-        
+
         eventBus.removeListener(type, listener1);
 
         // check

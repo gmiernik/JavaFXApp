@@ -2,14 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxapp.event;
+package org.miernik.jfxlib.event;
 
 /**
  *
  * @author Miernik
  */
 public class Event  {
-    public static EventType<Event> ANY = new EventType();
+    public static EventType ANY = new EventType();
     private EventType type;
 
     public Event(EventType type) {

@@ -16,7 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapp.event.NewPersonEvent;
+import javafxapp.model.Person;
 import javafxapp.model.PersonService;
+import org.miernik.jfxlib.presenter.AbstractPresenter;
 
 /**
  *
@@ -30,7 +32,8 @@ public class NewPersonPresenter extends AbstractPresenter<PersonService> impleme
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
 
-    public void showModal() {
+    @Override
+    public void show() {
         if (window == null) {
             window = new Stage();
             window.setTitle("New person");
@@ -61,13 +64,13 @@ public class NewPersonPresenter extends AbstractPresenter<PersonService> impleme
         });
     }
     
-    public void save() {
-        getService().add(firstNameField.getText(), lastNameField.getText());
+    protected void save() {
+        Person p = getService().add(firstNameField.getText(), lastNameField.getText());
+        getEventBus().fireEvent(new NewPersonEvent(p));
         window.close();
-        getEventBus().fireEvent(new NewPersonEvent());
     }
     
-    public void cancel() {
+    protected void cancel() {
         getService().refresh();
         window.close();
     }
